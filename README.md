@@ -19,10 +19,9 @@ Redmine reports a plugin requirement error instead of starting with this
 integration silently disabled. The integration is intentionally narrow; it
 does not patch `redmine_kroki` or alter other Kroki diagram languages.
 
-This directory is currently an in-workspace prototype. It is intended to move
-to its own repository and become a submodule. The broader SVG/HTML export
-handling may eventually make this Mermaid-specific integration unnecessary;
-see the cosmoSys Kroki integration notes for the current status.
+This is a deliberately narrow integration. A more general approach to SVG/HTML
+report export is being evaluated in cosmoSys; if that approach supersedes this
+plugin, it may be retired rather than expanded with diagram-specific fixes.
 
 ## License
 
