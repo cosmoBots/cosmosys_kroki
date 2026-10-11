@@ -6,6 +6,10 @@ Mermaid diagrams rendered by
 reports. It is an optional companion plugin: cosmoSys remains usable without
 Kroki or this integration.
 
+> **EXPERIMENTAL:** The integration works. Its deployment wiring remains
+> provisional until Iván incorporates it into a more modular deployment
+> strategy; this label does not indicate a known functional limitation.
+
 For Mermaid macros in a cosmoSys report export, this plugin adds Mermaid's
 `htmlLabels: false` initialization directive when the diagram does not already
 define `htmlLabels`. This makes Mermaid use SVG-native text rather than
