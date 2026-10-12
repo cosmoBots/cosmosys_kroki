@@ -17,6 +17,14 @@ define `htmlLabels`. This makes Mermaid use SVG-native text rather than
 conversion pipeline. Explicit `htmlLabels` choices are preserved. Stored source
 text and the regular HTML report preview are not changed.
 
+For Ditaa macros, Redmine removes leading and trailing whitespace from a macro
+block before passing it to `redmine_kroki`. That can shift an indented first
+diagram line relative to the remaining lines. When the first non-blank Ditaa
+line starts with ASCII spaces, this plugin inserts Ditaa's visually inert `*`
+marker on its own line immediately before the original diagram body, so
+Redmine's trimming no longer removes its indentation. Unindented Ditaa source
+and tab-indented lines are left unchanged.
+
 Install this plugin alongside cosmoSys and `redmine_kroki` 0.5.0 or later, then
 restart Redmine. The dependency is mandatory: if Kroki is absent or too old,
 Redmine reports a plugin requirement error instead of starting with this
