@@ -11,7 +11,7 @@ Redmine::Plugin.register :cosmosys_kroki do
   author_url 'https://cosmobots.eu'
 
   requires_redmine version_or_higher: '7.0.1'
-  requires_redmine_plugin :cosmosys, version_or_higher: '0.1.6'
+  requires_redmine_plugin :cosmosys, version_or_higher: '0.1.7'
 end
 
 # Redmine loads plugin directories in lexical order. Since this directory sorts
