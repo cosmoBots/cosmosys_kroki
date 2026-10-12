@@ -4,7 +4,7 @@ module CosmosysKroki
   module DitaaIndentationPatch
     # Mirrors the Redmine macro shape so the original block can be inspected
     # before ApplicationHelper#inject_macros applies String#strip to it.
-    KROKI_DITAA_MACRO_PATTERN = /\A\{\{kroki\((?<arguments>[^\r\n]*)\)(?<block>(?:\r\n|\r|\n).*?(?:\r\n|\r|\n))\}\}\z/im
+    KROKI_DITAA_MACRO_PATTERN = /\A\{\{kroki\((?<arguments>[^\r\n]*)\)(?<block>(?:\r\n|\r|\n).*?(?:\r\n|\r|\n))\}\}(?:\r\n|\r|\n)*\z/im
 
     def inject_macros(text, object, macros, execute = true, options = {})
       unless execute && macros.is_a?(Hash)
