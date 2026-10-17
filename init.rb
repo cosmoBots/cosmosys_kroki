@@ -6,12 +6,12 @@ Redmine::Plugin.register :cosmosys_kroki do
   name 'cosmoSys Kroki integration'
   author 'cosmoBots.eu'
   description 'Adapts Kroki diagrams for cosmoSys document export and Ditaa macros.'
-  version '0.1.0'
+  version '0.1.1'
   url 'https://cosmobots.eu'
   author_url 'https://cosmobots.eu'
 
   requires_redmine version_or_higher: '7.0.1'
-  requires_redmine_plugin :cosmosys, version_or_higher: '0.1.7'
+  requires_redmine_plugin :cosmosys, version_or_higher: '0.1.10'
 end
 
 # Redmine loads plugin directories in lexical order. Since this directory sorts
