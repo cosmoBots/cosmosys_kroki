@@ -5,8 +5,8 @@ require 'redmine'
 Redmine::Plugin.register :cosmosys_kroki do
   name 'cosmoSys Kroki integration'
   author 'cosmoBots.eu'
-  description 'Adapts Kroki diagrams for cosmoSys document export and Ditaa macros.'
-  version '0.1.1'
+  description 'Adapts Kroki diagrams for cosmoSys document export.'
+  version '0.1.2'
   url 'https://cosmobots.eu'
   author_url 'https://cosmobots.eu'
 
@@ -22,7 +22,7 @@ unless defined?(CosmosysKrokiPluginDependencyListener)
     def after_plugins_loaded(_context = {})
       Redmine::Plugin.find(:cosmosys_kroki).requires_redmine_plugin(
         :redmine_kroki,
-        version_or_higher: '0.5.0'
+        version_or_higher: '0.5.1'
       )
     end
   end
@@ -30,13 +30,10 @@ end
 
 require_dependency File.expand_path('lib/cosmosys_kroki/mermaid_export_normalizer', __dir__)
 require_dependency File.expand_path('lib/cosmosys_kroki/export_context', __dir__)
-require_dependency File.expand_path('lib/cosmosys_kroki/ditaa_indentation_patch', __dir__)
 require_dependency File.expand_path('lib/cosmosys_kroki/macro_definitions_patch', __dir__)
 require_dependency File.expand_path('lib/cosmosys_kroki/items_controller_patch', __dir__)
 
 patch_cosmosys_kroki = proc do
-  ApplicationHelper.prepend CosmosysKroki::DitaaIndentationPatch unless ApplicationHelper < CosmosysKroki::DitaaIndentationPatch
-
   definitions = Redmine::WikiFormatting::Macros::Definitions
   definitions.prepend CosmosysKroki::MacroDefinitionsPatch unless definitions < CosmosysKroki::MacroDefinitionsPatch
 
