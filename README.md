@@ -2,7 +2,7 @@
 
 [`cosmoSys`](https://github.com/cosmoBots/cosmoSys) extension for exporting
 Mermaid diagrams rendered by
-[`redmine_kroki`](https://github.com/cosmoBots/redmine-kroki) in ODT/PDF
+[`redmine_kroki`](https://github.com/JeffDess/redmine-kroki) in ODT/PDF
 reports. It is an optional companion plugin: cosmoSys remains usable without
 Kroki or this integration.
 
@@ -17,7 +17,7 @@ define `htmlLabels`. This makes Mermaid use SVG-native text rather than
 conversion pipeline. Explicit `htmlLabels` choices are preserved. Stored source
 text and the regular HTML report preview are not changed.
 
-Install this plugin alongside cosmoSys and `redmine_kroki` 0.5.0 or later, then
+Install this plugin alongside cosmoSys and `redmine_kroki` 0.5.1 or later, then
 restart Redmine. The dependency is mandatory: if Kroki is absent or too old,
 Redmine reports a plugin requirement error instead of starting with this
 integration silently disabled. Indentation preservation for Ditaa, Svgbob and
@@ -26,6 +26,13 @@ GoAT is handled by upstream `redmine_kroki` 0.5.1 or later.
 This is a deliberately narrow integration. A more general approach to SVG/HTML
 report export is being evaluated in cosmoSys; if that approach supersedes this
 plugin, it may be retired rather than expanded with diagram-specific fixes.
+
+Before injecting the Mermaid directive, this integration restores upstream's
+indentation marker. Adding the directive ahead of the marker would leave an
+invisible character in the diagram source and cause Mermaid syntax errors.
+Binary-encoded Kroki macro error HTML is normalized to UTF-8 while preserving
+its existing HTML-safety status, so one invalid diagram can be shown as an
+error without aborting a report containing Unicode SVGs.
 
 ## License
 

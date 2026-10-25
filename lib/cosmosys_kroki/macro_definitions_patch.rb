@@ -3,26 +3,30 @@
 module CosmosysKroki
   module MacroDefinitionsPatch
     def exec_macro(name, object, arguments, text, options = {})
-      unless name.to_s == 'kroki' && CosmosysKroki::ExportContext.report_export?
-        return super
+      return super unless name.to_s == 'kroki'
+
+      if CosmosysKroki::ExportContext.report_export?
+        diagram_type = first_macro_argument(arguments)
+        Rails.logger.info(
+          "[cosmosys_kroki] Kroki macro reached during report export " \
+          "(type=#{diagram_type.to_s.strip.downcase}, source_bytes=#{text.to_s.bytesize})"
+        )
+        if diagram_type.to_s.strip.casecmp('mermaid').zero?
+          # Upstream 0.5.1 prefixes macro blocks before Redmine strips them.
+          # Restore that marker before adding a directive, otherwise it becomes
+          # buried in the source and Mermaid cannot recognize the diagram.
+          source = defined?(KrokiBlockIndentation) ? KrokiBlockIndentation.restore(text) : text
+          text = CosmosysKroki::MermaidExportNormalizer.call(diagram_type, source)
+        end
       end
 
-      diagram_type = first_macro_argument(arguments)
-      Rails.logger.info(
-        "[cosmosys_kroki] Kroki macro reached during report export " \
-        "(type=#{diagram_type.to_s.strip.downcase}, source_bytes=#{text.to_s.bytesize})"
-      )
-      return super unless diagram_type.to_s.strip.casecmp('mermaid').zero?
+      result = super(name, object, arguments, text, options)
+      return result unless result.is_a?(String) && result.encoding == Encoding::ASCII_8BIT
 
-      normalized_text = CosmosysKroki::MermaidExportNormalizer.call(diagram_type, text)
-      if normalized_text.equal?(text)
-        Rails.logger.info('[cosmosys_kroki] Mermaid source already defines htmlLabels; source left unchanged')
-        return super
-      end
-
-      Rails.logger.info('[cosmosys_kroki] Injected Mermaid htmlLabels=false before delegating to redmine_kroki')
-
-      super(name, object, arguments, normalized_text, options)
+      # Net::HTTP error bodies can be binary strings containing UTF-8 bytes.
+      # Redmine's macro error HTML must compose with subsequent Unicode SVGs.
+      utf8 = result.dup.force_encoding(Encoding::UTF_8).scrub
+      result.respond_to?(:html_safe?) && result.html_safe? ? utf8.html_safe : utf8
     end
 
     private
