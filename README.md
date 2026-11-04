@@ -1,5 +1,9 @@
 # cosmoSys Kroki integration
 
+Version **0.1.3** requires cosmoSys **0.2.8** or later. This dependency-only
+update aligns the integration with the current release set; the export-marker
+and Unicode-error fixes were already included in 0.1.2.
+
 [`cosmoSys`](https://github.com/cosmoBots/cosmoSys) extension for exporting
 Mermaid diagrams rendered by
 [`redmine_kroki`](https://github.com/JeffDess/redmine-kroki) in ODT/PDF
