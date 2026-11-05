@@ -10,9 +10,10 @@ Mermaid diagrams rendered by
 reports. It is an optional companion plugin: cosmoSys remains usable without
 Kroki or this integration.
 
-> **EXPERIMENTAL:** The integration works. Its deployment wiring remains
-> provisional until Iván incorporates it into a more modular deployment
-> strategy; this label does not indicate a known functional limitation.
+> **EXPERIMENTAL — opt-in:** This integration is not part of the production core.
+> Expect defects, incomplete features, performance limits and breaking changes.
+> Do not install it if you require production-level stability and support.
+> The warning concerns the integration itself, not just its deployment wiring.
 
 For Mermaid macros in a cosmoSys report export, this plugin adds Mermaid's
 `htmlLabels: false` initialization directive when the diagram does not already
